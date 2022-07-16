@@ -1,0 +1,20 @@
+frontend:
+  service:
+    port: 80
+    typeService: LoadBalancer
+  
+  replicas: 2
+  
+  image: 
+    repository: ikhsannugs/frontend-project
+    tags: 8
+  ingressHttps:
+    enabled: false
+    ingressClass: nginx
+    issuer: mern-prod
+    host: prod.kube.retiarno.my.id
+    secret: mern-prod-tls
+  ingressHttp:
+    enabled: true
+    ingressClass: nginx
+    host: prod.kube.retiarno.my.id

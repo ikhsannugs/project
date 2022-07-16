@@ -1,0 +1,59 @@
+{{- if .Values.frontend.ingressHttps.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-fe-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: {{ .Values.frontend.ingressHttps.issuer | quote }}
+spec:
+  ingressClassName: {{ .Values.frontend.ingressHttps.ingressClass }}
+  tls:
+  - hosts:
+    - {{ .Values.frontend.ingressHttps.host }}
+    secretName: {{ .Values.frontend.ingressHttps.secret }}
+  rules:
+  - host: {{ .Values.frontend.ingressHttps.host }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ .Release.Name }}-fe
+            port:
+              number: {{ .Values.frontend.service.port }}
+        path: /
+        pathType: {{ .Release.Name }}-be
+      - backend:
+          service:
+            name: backend
+            port:
+              number: 4000
+        path: /todos
+        pathType: Prefix
+{{- end }}
+---
+{{- if .Values.frontend.ingressHttp.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-fe-ingress
+spec:
+  ingressClassName: {{ .Values.frontend.ingressHttp.ingressClass }}
+  rules:
+  - host: {{ .Values.frontend.ingressHttp.host }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ .Release.Name }}-fe
+            port:
+              number: {{ .Values.frontend.service.port }}
+        path: /
+        pathType: Prefix
+      - backend:
+          service:
+            name: {{ .Release.Name }}-be
+            port:
+              number: 4000
+        path: /todos
+        pathType: Prefix
+{{- end }}
