@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  frontend:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-07-16T04:48:54.303958951Z"
+    description: Mern apps frontend
+    digest: 581b56d45422b29c0fa5e4b6b8ebe6290bfa79a2215525e0e2299a5d962a8968
+    name: frontend
+    type: application
+    urls:
+    - https://github.com/ikhsannugs/project/releases/download/frontend-0.1.0/frontend-0.1.0.tgz
+    version: 0.1.0
+generated: "2022-07-16T04:48:54.082468418Z"
